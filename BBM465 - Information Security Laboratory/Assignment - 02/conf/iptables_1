@@ -1,0 +1,28 @@
+#Restart iptable
+iptables --flush
+
+#Defaul Policy
+iptables --policy INPUT DROP
+iptables --policy OUTPUT DROP
+iptables --policy FORWARD DROP
+
+#Allowing loopback connection on Firewall
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+
+#Allow Established and Related Incoming and ESTABLISHED Outgoin Connections on Firewall
+iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -m conntrack --ctstate ESTABLISHED -j ACCEPT
+
+#Lan1(Computer Engineering) Packages Sending 
+iptables -A OUTPUT -i eth1 –m iprange ––src–range 192.168.10.1–192.168.10.255 -j ACCEPT
+iptables -A FORWARD -i eth1 -o eth2 -s 192.168.5.0/24 -d 192.168.10.0/24 -p 0 -j ACCEPT
+iptables –A INPUT -i eth1 –m iprange ––src–range 192.168.10.1–192.168.10.255 -j ACCEPT
+
+#Lan2(Electronic Engineering) Packages Sending
+iptables -A OUTPUT -i eth2 –m iprange ––src–range 192.168.5.1–192.168.5.255 -j ACCEPT
+iptables -A FORWARD -i eth2 -o eth1 -s 192.168.10.0/24 -d 192.168.5.0/24 -p 0 -j ACCEPT
+iptables –A INPUT -i eth2 –m iprange ––src–range 192.168.5.1–192.168.5.255 -j ACCEPT
+
+#Save iptable rules
+iptables -save

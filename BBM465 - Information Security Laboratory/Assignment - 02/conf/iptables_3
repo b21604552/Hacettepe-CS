@@ -1,0 +1,34 @@
+#Restart iptable
+iptables --flush
+
+#Defaul Policy
+iptables --policy INPUT DROP
+iptables --policy OUTPUT DROP
+iptables --policy FORWARD DROP
+
+#Allowing loopback connection on Firewall
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+
+#Allow Established and Related Incoming and ESTABLISHED Outgoin Connections on Firewall
+iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -m conntrack --ctstate ESTABLISHED -j ACCEPT
+
+#Web Server Packages Sending HTTP/HTTPS Config
+iptables -A INPUT -m multiport –s 198.168.1.2 --dports 80,443 -j ACCEPT
+iptables -A OUTPUT -m multiport –d 198.168.1.2 --dports 80,443 -j ACCEPT
+
+#Web Server Packages Sending IMAP/SMTP/POP3 Config
+iptables -A INPUT -m multiport –s 198.168.1.2 --dports 25,143,110 -j REJECT
+iptables -A OUTPUT -m multiport –d 198.168.1.2 --dports 25,143,110 -j REJECT
+
+#E-Mail Server Packages Sending SMTP Config
+iptables -A INPUT -m multiport –s 198.168.1.3 --dports 25 -j ACCEPT
+iptables -A OUTPUT -m multiport –d 198.168.1.3 --dports 25 -j ACCEPT
+
+#E-Mail Server Packages Sending HTTP/HTTPS/IMAP/POP3 Config
+iptables -A INPUT -m multiport –s 198.168.1.3 --dports 80,443,143,110 -j REJECT
+iptables -A OUTPUT -m multiport –d 198.168.1.3 --dports 80,443,143,110 -j REJECT
+
+#Save iptable rules
+iptables -save

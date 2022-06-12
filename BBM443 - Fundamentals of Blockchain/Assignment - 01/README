@@ -1,0 +1,14 @@
+Emre Hancı 21604552.
+
+Solidty Version:
+Solution in Solidity 0.6.1 version.
+
+Gas Limit:
+Work with 3900000 gas limit.
+
+Error Handling Notice:
+  While working with function, I added some meaningfull message to functions
+returns. There is some process manage for returning meaningfull message to
+end users. Therefore there can be a point that you wait and error status,
+but function gives success. If you look at the transaction logs field that
+decoded output. There is a message that explain function run status.

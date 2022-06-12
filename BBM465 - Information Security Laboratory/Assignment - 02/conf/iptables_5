@@ -1,0 +1,27 @@
+#Restart iptable
+iptables --flush
+
+#Defaul Policy
+iptables --policy INPUT DROP
+iptables --policy OUTPUT DROP
+iptables --policy FORWARD DROP
+
+#Allowing loopback connection on Firewall
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+
+#Allow Established and Related Incoming and ESTABLISHED Outgoin Connections on Firewall
+iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -m conntrack --ctstate ESTABLISHED -j ACCEPT
+
+#Remote Computer Ping Sending Config For Lan1
+iptables -A INPUT -p icmp -i eth0 –m iprange ––src–range 192.168.5.1–192.168.5.255 -j ACCEPT
+
+#Remote Computer Ping Sending Config For Lan2
+iptables -A INPUT -p icmp -i eth0 –m iprange ––src–range 192.168.10.1–192.168.10.255 -j ACCEPT
+
+#Remote Computer Ping Sending Config For Lan3
+iptables -A INPUT -p icmp -i eth0 –m iprange ––src–range 192.168.25.1–192.168.25.255 -j ACCEPT
+
+#Save iptable rules
+iptables -save

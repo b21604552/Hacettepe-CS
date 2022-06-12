@@ -1,0 +1,26 @@
+#Restart iptable
+iptables --flush
+
+#Defaul Policy
+iptables --policy INPUT DROP
+iptables --policy OUTPUT DROP
+iptables --policy FORWARD DROP
+
+#Allowing loopback connection on Firewall
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+
+#Allow Established and Related Incoming and ESTABLISHED Outgoin Connections on Firewall
+iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -m conntrack --ctstate ESTABLISHED -j ACCEPT
+
+#Lan1, Lan2, Lan3 Packages Sending Twitter
+iptables -A INPUT –s 170.192.40.234 -m multiport --dports 80,443 -j ACCEPT
+iptables -A OUTPUT –d 170.192.40.234 -m multiport --sports 80,443 -j ACCEPT
+
+#Lan1, Lan2, Lan3 Packages Sending Facebook
+iptables -A INPUT –s 144.188.127.195 -m multiport --dports 80,443 -j ACCEPT
+iptables -A OUTPUT –d 144.188.127.195 -m multiport --sports 80,443 -j ACCEPT
+
+#Save iptable rules
+iptables -save

